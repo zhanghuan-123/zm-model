@@ -2,7 +2,7 @@
 import { MessageBox, Message } from 'element-ui';
 import { EventCenter } from './EventCenter';
 import exec, {
-  RenameNodeCommand, PasteNodeCommand, RemoveNodeCommand, RemoveConnectorCommand,
+  RenameNodeCommand, PasteNodeCommand, RemoveNodeCommand, RemoveConnectorCommand, SetOptionsNodeCommand,
 } from './Command';
 import editor from './editor';
 
@@ -91,18 +91,23 @@ function generateMenuItem(opt) {
  */
 function generateNodeMenu() {
   generateMenuItem({
-    text: '重命名',
+    text: '配置参数',
     icon: 'el-icon-edit',
     role: 'rename',
     clickHandle: () => {
       const nodeEl = document.getElementById(currentComponent);
       const cComp = nodeEl.vNode.$children[0];
-      MessageBox.prompt('请输入新名称', '重命名', {
+      console.log(nodeEl,'nodeEl>>>>')
+      console.log(cComp,'cComp>>>>')
+      // todo
+      //怎么获取各个节点的props，来展示不同的编辑页面
+      MessageBox.prompt('请输入', '参数配置', {
         confirmButtonText: '确定',
         inputValue: cComp.text,
         cancelButtonText: '取消',
       }).then(({ value }) => {
-        exec(RenameNodeCommand, currentComponent, cComp.text, value);
+        // exec(RenameNodeCommand, currentComponent, cComp.text, value);
+        exec(SetOptionsNodeCommand, currentComponent, {treeValue : 2}, { treeValue : value})
       }).catch(() => {});
     },
   });

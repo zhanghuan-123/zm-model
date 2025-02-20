@@ -274,6 +274,9 @@ function addNodeByAction(action, position, icon, value) {
     data: {
       icon,
       value,
+      options: {
+        treeValue: 2
+      }
     },
   });
   [...targetEndpoints].concat([...sourceEndpoints]).forEach((point) => {
@@ -424,6 +427,16 @@ function renameNode(nodeId, value) {
 }
 
 /**
+ * 改变参数配置
+ * @description
+ * @param {string} nodeId
+ * @param {object} options
+ */
+function setOptionsNode(nodeId, options) {
+  model.changeNodeOptions(nodeId, options);
+}
+
+/**
  * @description 根据model里的数据  渲染流程图
  */
 function render() {
@@ -459,6 +472,8 @@ function timeout(fn, time) {
  * @description 执行当前实验
  */
 function execModel() {
+  const data = model.getData();
+  console.log(data,'>>>>')
   changeStateByNodeId('aaa', 'loading');
   return timeout(() => {
     changeStateByNodeId('aaa', 'success');
@@ -563,6 +578,7 @@ const editor = {
   execAddConnectorCommand,
   removeConnectorByUuids,
   execModel,
+  setOptionsNode,
 };
 
 export default editor;

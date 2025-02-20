@@ -16,6 +16,9 @@ Mock.mock('api/getFlowChartData', 'get', () => ({
       data: {
         value: '数据源1',
         icon: 'el-icon-coin',
+        options: {
+          treeValue: 2
+        }
       },
     },
     {

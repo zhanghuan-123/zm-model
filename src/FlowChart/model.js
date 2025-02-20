@@ -84,6 +84,11 @@ export default {
     const node = FlowChartJson.nodes.find(n => n.id === nodeId);
     node.data.value = value;
   },
+  // 改变节点中的参数配置
+  changeNodeOptions(nodeId,options) {
+    const node = FlowChartJson.nodes.find(n => n.id === nodeId);
+    node.data.options = options;
+  },
 
   getHead() {
     return FlowChartJson.head;

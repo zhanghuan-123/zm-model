@@ -135,6 +135,22 @@ class RenameNodeCommand extends Command {
 }
 
 /**
+ * @description 改变节点参数
+ * @class SetOptionsNodeCommand
+ */
+class SetOptionsNodeCommand extends Command {
+  exec(nodeId, oldValue, newValue) {
+    this.nodeId = nodeId;
+    this.oldValue = oldValue;
+    editor.setOptionsNode(nodeId, newValue);
+  }
+
+  undo() {
+    editor.setOptionsNode(this.nodeId, this.oldValue);
+  }
+}
+
+/**
  * @description 撤销上一个命令
  */
 function undo() {
@@ -163,4 +179,5 @@ export {
   MoveNodeCommand,
   RenameNodeCommand,
   PasteNodeCommand,
+  SetOptionsNodeCommand,
 };
