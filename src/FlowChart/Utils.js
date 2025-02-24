@@ -1,6 +1,6 @@
-import { CONNECTORSEPARATESYMBOL } from './const';
+import { CONNECTORSEPARATESYMBOL } from "./const";
 
-const uuidv1 = require('uuid/v1');
+const uuidv1 = require("uuid/v1");
 
 /**
  * @description 增加css规则
@@ -9,13 +9,13 @@ const uuidv1 = require('uuid/v1');
  */
 export function addCssRules(cssRules) {
   const css = cssRules;
-  const style = document.createElement('style');
+  const style = document.createElement("style");
   if (style.styleSheet) {
     style.styleSheet.cssText = css;
   } else {
     style.appendChild(document.createTextNode(css));
   }
-  document.getElementsByTagName('head')[0].appendChild(style);
+  document.getElementsByTagName("head")[0].appendChild(style);
 }
 
 /**
@@ -25,7 +25,7 @@ export function addCssRules(cssRules) {
  * @returns {boolean}
  */
 export function isEndpoint(anchor) {
-  return anchor.type === 'Dot';
+  return anchor.type === "Dot";
 }
 
 /**

@@ -4,7 +4,7 @@ import { messageError } from "@/utils/common";
 // 创建 axios 实例
 const service = axios.create({
   timeout: 10000000, // request timeout
-  maxContentLength: 5
+  maxContentLength: 5,
 });
 service.defaults.withCredentials = true;
 // 响应成功
@@ -80,12 +80,12 @@ service.interceptors.response.use(
 // 请求方式配置
 const Http: Record<string, any> = {};
 
-const get = async function(row: { url: string; params: any }) {
+const get = async function (row: { url: string; params: any }) {
   try {
     const Response = await service({
       method: "get",
       url: row.url,
-      params: row.params // get 请求时带的参数
+      params: row.params, // get 请求时带的参数
     });
     return responseSuccess(Response);
   } catch (Response) {
@@ -93,13 +93,13 @@ const get = async function(row: { url: string; params: any }) {
   }
 };
 
-const post = async function(row: { url: string; data: Record<string, any>; headers?: any }) {
+const post = async function (row: { url: string; data: Record<string, any>; headers?: any }) {
   try {
     const Response = await service({
       method: "post",
       url: row.url,
       data: row.data,
-      headers: row.headers
+      headers: row.headers,
     });
     return responseSuccess(Response);
   } catch (Response) {
@@ -119,19 +119,19 @@ const getBaseURL = (url: string) => {
   }
 };
 
-Http.get = function(url: string, params: Record<string, any> = {}) {
+Http.get = function (url: string, params: Record<string, any> = {}) {
   return get({ url: getBaseURL(url), params });
 };
 
-Http.post = function(url: string, data: Record<string, any> = {}) {
+Http.post = function (url: string, data: Record<string, any> = {}) {
   return post({ url: getBaseURL(url), data });
 };
 
-Http.postForm = function(url: string, data: Record<string, any> = {}) {
+Http.postForm = function (url: string, data: Record<string, any> = {}) {
   return post({
     url: getBaseURL(url),
     data,
-    headers: { "Content-Type": "multipart/form-data" }
+    headers: { "Content-Type": "multipart/form-data" },
   });
 };
 

@@ -2,7 +2,7 @@ let FlowChartJson = {
   nodes: [],
   endpoints: [],
   edges: [],
-  head: '',
+  head: "",
 };
 
 export default {
@@ -23,11 +23,11 @@ export default {
   },
 
   removeNodeByNodeId(nodeId) {
-    FlowChartJson.nodes = FlowChartJson.nodes.filter(node => node.id !== nodeId);
+    FlowChartJson.nodes = FlowChartJson.nodes.filter((node) => node.id !== nodeId);
   },
 
   getNodeDataByNodeId(nodeId) {
-    return FlowChartJson.nodes.find(n => n.id === nodeId);
+    return FlowChartJson.nodes.find((n) => n.id === nodeId);
   },
 
   addEdge(edge) {
@@ -35,7 +35,7 @@ export default {
   },
 
   removeEdge(edge) {
-    FlowChartJson.edges = FlowChartJson.edges.filter(item => item !== edge);
+    FlowChartJson.edges = FlowChartJson.edges.filter((item) => item !== edge);
   },
 
   getEdgesByPointIds(ids) {
@@ -52,7 +52,7 @@ export default {
 
   removeEdgesByPointIds(ids) {
     ids.forEach((id) => {
-      FlowChartJson.edges = FlowChartJson.edges.filter(edge => edge.indexOf(id) === -1);
+      FlowChartJson.edges = FlowChartJson.edges.filter((edge) => edge.indexOf(id) === -1);
     });
   },
 
@@ -61,32 +61,34 @@ export default {
   },
 
   getEndpointsByPointIds(ids) {
-    return [...FlowChartJson.endpoints.filter((point) => {
-      if (ids.indexOf(point.id) > -1) {
-        return true;
-      }
-      return false;
-    })];
+    return [
+      ...FlowChartJson.endpoints.filter((point) => {
+        if (ids.indexOf(point.id) > -1) {
+          return true;
+        }
+        return false;
+      }),
+    ];
   },
 
   removeEndpointsByPointIds(ids) {
     ids.forEach((id) => {
-      FlowChartJson.endpoints = FlowChartJson.endpoints.filter(point => point.id !== id);
+      FlowChartJson.endpoints = FlowChartJson.endpoints.filter((point) => point.id !== id);
     });
   },
 
   changeNodePos(nodeId, newPosition) {
-    const node = FlowChartJson.nodes.find(n => n.id === nodeId);
+    const node = FlowChartJson.nodes.find((n) => n.id === nodeId);
     node.position = newPosition;
   },
 
   changeNodeValue(nodeId, value) {
-    const node = FlowChartJson.nodes.find(n => n.id === nodeId);
+    const node = FlowChartJson.nodes.find((n) => n.id === nodeId);
     node.data.value = value;
   },
   // 改变节点中的参数配置
-  changeNodeOptions(nodeId,options) {
-    const node = FlowChartJson.nodes.find(n => n.id === nodeId);
+  changeNodeOptions(nodeId, options) {
+    const node = FlowChartJson.nodes.find((n) => n.id === nodeId);
     node.data.options = options;
   },
 

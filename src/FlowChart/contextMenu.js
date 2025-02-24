@@ -1,10 +1,30 @@
 /* eslint-disable import/no-cycle */
-import { MessageBox, Message } from 'element-ui';
-import { EventCenter } from './EventCenter';
+import { MessageBox, Message } from "element-ui";
+import { EventCenter } from "./EventCenter";
 import exec, {
-  RenameNodeCommand, PasteNodeCommand, RemoveNodeCommand, RemoveConnectorCommand, SetOptionsNodeCommand,
-} from './Command';
-import editor from './editor';
+  PasteNodeCommand,
+  RemoveNodeCommand,
+  RemoveConnectorCommand,
+  SetOptionsNodeCommand,
+} from "./Command";
+import model from "./model";
+import editor from "./editor";
+
+
+// 右键菜单栏容器
+let ul = null;
+// 触发右键菜单的组件（Connector或者Node）
+let currentComponent = null;
+// 当前复制的节点Id
+let copiedNodeId = "";
+// 记录当前菜单栏位置
+let contextMenuPos = {};
+/**
+ * @description 隐藏右键菜单
+ */
+function hide() {
+  ul.style.display = "none";
+}
 
 class MenuItem {
   constructor(opt) {
@@ -16,8 +36,8 @@ class MenuItem {
   }
 
   init() {
-    const li = document.createElement('li');
-    li.className = 'fy_contextMenu_item';
+    const li = document.createElement("li");
+    li.className = "fy_contextMenu_item";
     li.dataset.role = this.role;
     li.innerHTML = `<i class="${this.icon}"></i><span>${this.text}</span>`;
     this.el = li;
@@ -38,42 +58,26 @@ class MenuItem {
   }
 }
 
-// 右键菜单栏容器
-let ul = null;
-// 触发右键菜单的组件（Connector或者Node）
-let currentComponent = null;
-// 当前复制的节点Id
-let copiedNodeId = '';
-// 记录当前菜单栏位置
-let contextMenuPos = {};
-
 /**
-   * @description 删除连接线
-   * @param {Connection} comp 连接线对象
-   */
+ * @description 删除连接线
+ * @param {Connection} comp 连接线对象
+ */
 function deleteHandle(comp) {
   if (comp) {
-    if (typeof comp === 'object') {
+    if (typeof comp === "object") {
       exec(RemoveConnectorCommand, comp);
-    } else if (typeof comp === 'string') {
+    } else if (typeof comp === "string") {
       exec(RemoveNodeCommand, comp);
     }
   }
 }
 
 /**
- * @description 隐藏右键菜单
- */
-function hide() {
-  ul.style.display = 'none';
-}
-
-/**
  * @description 生成分割线菜单项
  */
 function generateMenuDivideLine() {
-  const divide = document.createElement('div');
-  divide.style.cssText = 'height:1px;background:#efefef;';
+  const divide = document.createElement("div");
+  divide.style.cssText = "height:1px;background:#efefef;";
   ul.appendChild(divide);
 }
 
@@ -91,50 +95,50 @@ function generateMenuItem(opt) {
  */
 function generateNodeMenu() {
   generateMenuItem({
-    text: '配置参数',
-    icon: 'el-icon-edit',
-    role: 'rename',
+    text: "配置参数",
+    icon: "el-icon-edit",
+    role: "rename",
     clickHandle: () => {
-      const nodeEl = document.getElementById(currentComponent);
-      const cComp = nodeEl.vNode.$children[0];
-      console.log(nodeEl,'nodeEl>>>>')
-      console.log(cComp,'cComp>>>>')
-      // todo
-      //怎么获取各个节点的props，来展示不同的编辑页面
-      MessageBox.prompt('请输入', '参数配置', {
-        confirmButtonText: '确定',
-        inputValue: cComp.text,
-        cancelButtonText: '取消',
-      }).then(({ value }) => {
-        // exec(RenameNodeCommand, currentComponent, cComp.text, value);
-        exec(SetOptionsNodeCommand, currentComponent, {treeValue : 2}, { treeValue : value})
-      }).catch(() => {});
+      const nodeData = model.getNodeDataByNodeId(currentComponent);
+      const { options = {} } = nodeData.data;
+      MessageBox.prompt("请输入", "参数配置", {
+        confirmButtonText: "确定",
+        inputValue: options.treeValue || "",
+        cancelButtonText: "取消",
+      })
+        .then(({ value }) => {
+          console.log(value, "value999");
+          exec(SetOptionsNodeCommand, currentComponent, options, { treeValue: value });
+        })
+        .catch((error) => {
+          console.log(error)
+        });
     },
   });
   generateMenuItem({
-    text: '复制',
-    icon: 'el-icon-copy-document',
-    role: 'delete',
+    text: "复制",
+    icon: "el-icon-copy-document",
+    role: "delete",
     clickHandle: () => {
       copiedNodeId = currentComponent;
       Message.success({
-        message: '复制成功！',
+        message: "复制成功！",
       });
     },
   });
   generateMenuItem({
-    text: '删除',
-    icon: 'el-icon-delete',
-    role: 'delete',
+    text: "删除",
+    icon: "el-icon-delete",
+    role: "delete",
     clickHandle: () => {
       deleteHandle(currentComponent);
     },
   });
   generateMenuDivideLine();
   generateMenuItem({
-    text: '查看数据',
-    icon: 'el-icon-view',
-    role: 'view',
+    text: "查看数据",
+    icon: "el-icon-view",
+    role: "view",
     clickHandle: () => {
       // const nodeEl = document.getElementById(currentComponent);
       // const cComp = nodeEl.vNode.$children[0];
@@ -148,9 +152,9 @@ function generateNodeMenu() {
  */
 function generateConnectorMenu() {
   generateMenuItem({
-    text: '删除',
-    icon: 'el-icon-delete',
-    role: 'delete',
+    text: "删除",
+    icon: "el-icon-delete",
+    role: "delete",
     clickHandle: () => {
       deleteHandle(currentComponent);
     },
@@ -162,20 +166,20 @@ function generateConnectorMenu() {
  */
 function generateBgMenu() {
   generateMenuItem({
-    text: '粘贴节点',
-    icon: 'el-icon-download',
-    role: 'paste',
+    text: "粘贴节点",
+    icon: "el-icon-download",
+    role: "paste",
     clickHandle: () => {
       if (copiedNodeId) {
         exec(
           PasteNodeCommand,
           { pageX: contextMenuPos.left, pageY: contextMenuPos.top },
-          copiedNodeId,
+          copiedNodeId
         );
       } else {
         Message({
-          type: 'warning',
-          message: '请复制节点后再粘贴。',
+          type: "warning",
+          message: "请复制节点后再粘贴。",
         });
       }
     },
@@ -186,18 +190,18 @@ function generateBgMenu() {
  * @description 生成菜单项
  */
 function generateMenuItemsBycurrentComponent() {
-  ul.innerHTML = '';
-  if (currentComponent && typeof currentComponent === 'string')generateNodeMenu();
-  if (currentComponent && typeof currentComponent === 'object') generateConnectorMenu();
-  if (typeof currentComponent === 'undefined') generateBgMenu();
+  ul.innerHTML = "";
+  if (currentComponent && typeof currentComponent === "string") generateNodeMenu();
+  if (currentComponent && typeof currentComponent === "object") generateConnectorMenu();
+  if (typeof currentComponent === "undefined") generateBgMenu();
 }
 
 /**
  * @description 生成菜单容器
  */
 function generateMenuContainer() {
-  ul = document.createElement('ul');
-  ul.className = 'fy_contextMenu';
+  ul = document.createElement("ul");
+  ul.className = "fy_contextMenu";
   document.body.appendChild(ul);
 }
 
@@ -209,7 +213,7 @@ function generateMenuContainer() {
 function show(position, component) {
   ul.style.top = `${position.top}px`;
   ul.style.left = `${position.left}px`;
-  ul.style.display = 'block';
+  ul.style.display = "block";
   contextMenuPos = position;
   currentComponent = component;
   generateMenuItemsBycurrentComponent();
@@ -223,11 +227,10 @@ function init() {
 
   hide();
 
-  EventCenter.on('document.click', (ev) => {
-    if (!ev.target.classList.contains('fy_contextMenu_item')) hide();
+  EventCenter.on("document.click", (ev) => {
+    if (!ev.target.classList.contains("fy_contextMenu_item")) hide();
   });
 }
-
 
 const ContextMenu = {
   init,

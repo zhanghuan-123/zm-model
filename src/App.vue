@@ -1,16 +1,10 @@
 <template>
   <el-container class="wrap">
-    <el-header class="fy_el-header"
-               height="42px">
-      <img src="./assets/logo.png"
-           alt="">
+    <el-header class="fy_el-header" height="42px">
+      <img src="./assets/logo.png" alt="" />
       <span class="logoFont">机器学习平台</span>
-      <router-link class="navItem"
-                   active-class="active"
-                   to="/index">ai平台</router-link>
-      <router-link class="navItem"
-                   active-class="active"
-                   to="/operation">运维中心</router-link>
+      <router-link class="navItem" active-class="active" to="/index">ai平台</router-link>
+      <router-link class="navItem" active-class="active" to="/operation">运维中心</router-link>
       <el-dropdown>
         <span class="el-dropdown-link">
           更多<i class="el-icon-arrow-down el-icon--right"></i>
@@ -73,38 +67,36 @@ html {
         top: -10px;
         text-decoration: none;
         &.active {
-          background: hsla(0,0%,100%,.2);
+          background: hsla(0, 0%, 100%, 0.2);
         }
       }
-      .el-dropdown{
+      .el-dropdown {
         float: right;
         height: 42px;
-        .el-dropdown-link{
+        .el-dropdown-link {
           color: #fff;
         }
-
       }
     }
 
-    .my-app-container{
+    .my-app-container {
       height: calc(100% - 42px);
     }
   }
 }
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-    border-radius: 3px;
-    background: rgba(0,0,0,0.06);
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.08);
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.08);
 }
 /* 滚动条滑块 */
 ::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background: rgba(0,0,0,0.12);
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
 }
-
 </style>

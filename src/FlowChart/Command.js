@@ -1,10 +1,12 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
-import editor from './editor';
+import editor from "./editor";
 
 const commandStack = {
   commandList: [],
-  recover() {},
+  recover() {
+    console.log('recover')
+  },
   undo() {
     const command = this.commandList.pop();
     if (command) {
@@ -22,11 +24,11 @@ const commandStack = {
  */
 class Command {
   exec() {
-    throw new Error('请实现exec方法！');
+    throw new Error("请实现exec方法！");
   }
 
   undo() {
-    throw new Error('请实现undo方法！');
+    throw new Error("请实现undo方法！");
   }
 }
 

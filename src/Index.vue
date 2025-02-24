@@ -1,12 +1,13 @@
 <template>
   <el-container class="indexWrap">
-    <el-aside width="48px"
-              class="fy_el-aside">
-      <el-menu default-active="2"
-               background-color="transparent"
-               text-color="#9aaeba"
-               active-text-color="#9aaeba"
-               :collapse="true">
+    <el-aside width="48px" class="fy_el-aside">
+      <el-menu
+        default-active="2"
+        background-color="transparent"
+        text-color="#9aaeba"
+        active-text-color="#9aaeba"
+        :collapse="true"
+      >
         <el-menu-item index="1">
           <i class="el-icon-s-home"></i>
           <span slot="title">首页</span>
@@ -28,16 +29,15 @@
 </template>
 
 <script>
-import FlowChart from './FlowChart.vue';
+import FlowChart from "./FlowChart.vue";
 
 export default {
   components: { FlowChart },
-
 };
 </script>
 
 <style lang="scss">
-.indexWrap{
+.indexWrap {
   .fy_el-aside {
     background: #21232b;
     overflow-x: hidden;
@@ -74,9 +74,8 @@ export default {
       }
     }
   }
-  .el-main{
+  .el-main {
     padding: 0;
   }
 }
-
 </style>

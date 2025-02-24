@@ -20,7 +20,6 @@ module.exports = {
         ignorePattern: "^_"
       }
     ],
-    "vue/script-setup-uses-vars": "error",
     "@typescript-eslint/interface-name-prefix": 0,
     camelcase: "off",
     "@typescript-eslint/camelcase": "off",
