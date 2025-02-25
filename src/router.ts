@@ -16,6 +16,16 @@ export default new Router({
       component: Index,
     },
     {
+      path: "/desgin/list",
+      name: "desginList",
+      component: () => import(/* webpackChunkName: "operation" */ "./desgin/list.vue"),
+    },
+    {
+      path: "/desgin/edit",
+      name: "desginEdit",
+      component: () => import(/* webpackChunkName: "operation" */ "./desgin/edit.vue"),
+    },
+    {
       path: "/operation",
       name: "operation",
       component: () => import(/* webpackChunkName: "operation" */ "./Operation.vue"),

@@ -472,26 +472,34 @@ function timeout(fn, time) {
 function execModel() {
   const data = model.getData();
   console.log(data, ">>>>");
-  changeStateByNodeId("aaa", "loading");
-  return timeout(() => {
-    changeStateByNodeId("aaa", "success");
-    changeStateByNodeId("bbb", "loading");
-    blingConnectors(["source1&&target1", "source2&&target2"]);
-  }, 3000)
-    .then(() =>
-      timeout(() => {
-        changeStateByNodeId("bbb", "success");
-        changeStateByNodeId("ccc", "loading");
-        blingConnectors(["source3&&ccc111", "source3&&ccc222"]);
-      }, 4000)
-    )
-    .then(() =>
-      timeout(() => {
-        changeStateByNodeId("ccc", "success");
-        changeStateByNodeId("ddd", "failed");
-        blingConnectors([]);
-      }, 5000)
-    );
+  return new Promise((resovle,reject)=>{
+    if(data && data.nodes) {
+      data.nodes.forEach((item)=>{
+        changeStateByNodeId(item.id, "success");
+      })
+    }
+    resovle(true);
+  })
+  // changeStateByNodeId("aaa", "loading");
+  // return timeout(() => {
+  //   changeStateByNodeId("aaa", "success");
+  //   changeStateByNodeId("bbb", "loading");
+  //   blingConnectors(["source1&&target1", "source2&&target2"]);
+  // }, 3000)
+  //   .then(() =>
+  //     timeout(() => {
+  //       changeStateByNodeId("bbb", "success");
+  //       changeStateByNodeId("ccc", "loading");
+  //       blingConnectors(["source3&&ccc111", "source3&&ccc222"]);
+  //     }, 4000)
+  //   )
+  //   .then(() =>
+  //     timeout(() => {
+  //       changeStateByNodeId("ccc", "success");
+  //       changeStateByNodeId("ddd", "failed");
+  //       blingConnectors([]);
+  //     }, 5000)
+  //   );
 }
 
 /**

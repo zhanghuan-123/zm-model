@@ -20,9 +20,9 @@
     <el-main>
       <el-container>
         <el-header height="40px" class="tabsNav">
-          <el-tabs v-model="activeName" type="card" closable>
+          <el-tabs v-model="activeName" type="card">
             <el-tab-pane name="first">
-              <span slot="label"><i class="el-icon-s-promotion"></i> 我的模型一</span></el-tab-pane
+              <span slot="label"><i class="el-icon-s-promotion"></i> 我的模型</span></el-tab-pane
             >
           </el-tabs>
         </el-header>
@@ -37,8 +37,8 @@
                   size="small"
                   >执行</el-button
                 >
-                <el-button icon="el-icon-upload" size="small">部署</el-button>
-                <el-button icon="el-icon-box" size="small">Auto ML</el-button>
+                <!-- <el-button icon="el-icon-upload" size="small">部署</el-button>
+                <el-button icon="el-icon-box" size="small">Auto ML</el-button> -->
               </div>
               <div class="tool-right">
                 <el-tooltip content="撤销">
@@ -55,16 +55,16 @@
                 <el-tooltip content="缩小">
                   <el-button icon="el-icon-zoom-out" @click="zoomIn" circle></el-button>
                 </el-tooltip>
-                <el-tooltip content="自动布局">
+                <!-- <el-tooltip content="自动布局">
                   <el-button icon="el-icon-bangzhu" circle></el-button>
-                </el-tooltip>
+                </el-tooltip> -->
                 <!-- <el-tooltip content="适应画布">
                   <el-button icon="el-icon-money"
                              circle></el-button>
                 </el-tooltip> -->
-                <el-tooltip content="全屏">
+                <!-- <el-tooltip content="全屏">
                   <el-button icon="el-icon-full-screen" circle></el-button>
-                </el-tooltip>
+                </el-tooltip> -->
               </div>
             </div>
             <div class="mainContainer" @drop="dropHandle" @dragover="dragoverHandle">
@@ -92,11 +92,11 @@
                       <div class="model-attr">
                         <p>
                           <span class="item">项目名称</span>
-                          <span class="value">Test</span>
+                          <span class="value">{{modelName}}</span>
                         </p>
                         <p>
                           <span class="item">创建日期</span>
-                          <span class="value">2019-04-19 12:14:39</span>
+                          <span class="value">{{createTime}}</span>
                         </p>
                         <p>
                           <span class="item">名称</span>
@@ -164,6 +164,7 @@
 </template>
 <script lang="ts">
 import Vue, { CreateElement } from "vue";
+import moment from "moment";
 import API from "./api/index";
 import FlowChart from "./FlowChart/index";
 
@@ -225,6 +226,7 @@ export default Vue.extend({
           message: "模型不存在,请生成模型后重试",
         },
       ],
+      createTime: moment().format("YYYY-MM-DD HH:mm:ss")
     };
   },
   watch: {
@@ -247,9 +249,9 @@ export default Vue.extend({
       this.isShowNode = true;
       this.currentNodeId = data;
     });
-    API.getFlowChartData().then((data: any) => {
-      FlowChart.loadData(data?.data);
-    });
+    // API.getFlowChartData().then((data: any) => {
+    //   FlowChart.loadData(data?.data);
+    // });
     API.getMenuData().then((data: any) => {
       this.nodeData = data?.data;
     });
