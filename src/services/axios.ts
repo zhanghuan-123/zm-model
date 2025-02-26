@@ -1,5 +1,5 @@
 import axios from "axios";
-import { messageError } from "@/utils/common";
+import { messageError } from "@/utils";
 // 全局配置
 // 创建 axios 实例
 const service = axios.create({

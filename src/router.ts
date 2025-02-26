@@ -16,6 +16,11 @@ export default new Router({
       component: Index,
     },
     {
+      path: "/model/login",
+      name: "modelLogin",
+      component: () => import(/* webpackChunkName: "operation" */ "./login/index.vue"),
+    },
+    {
       path: "/desgin/list",
       name: "desginList",
       component: () => import(/* webpackChunkName: "operation" */ "./desgin/list.vue"),

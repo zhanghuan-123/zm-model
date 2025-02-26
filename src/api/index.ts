@@ -16,8 +16,26 @@ function getMenuData() {
 const addSuggestionApi = (params: Record<string, any>) => {
   return Http.post("/crm-platform/api/merchant/addSuggestion", params);
 };
+
+const deleteModel = (params: Record<string, any>) => {
+  return Http.post("/crm-platform/api/merchant/addSuggestion", params);
+};
+
+const getModelList = (params: Record<string, any>) => {
+  return Http.post("/crm-platform/api/merchant/addSuggestion", params);
+};
+
+// 登录
+const loginApi = (params: any) => {
+  return Http.post("/crm-platform/api/account/login", params);
+};
+
+
 export default {
   getFlowChartData,
   getMenuData,
   addSuggestionApi,
+  deleteModel,
+  getModelList,
+  loginApi,
 };

@@ -31,6 +31,13 @@
             <div id="mainMenu">
               <div class="tool-left">
                 <el-button
+                  icon="el-icon-arrow-left"
+                  @click="back"
+                  :disabled="isExecDisable"
+                  size="small"
+                  >返回列表</el-button
+                >
+                <el-button
                   icon="el-icon-video-play"
                   @click="execModel"
                   :disabled="isExecDisable"
@@ -364,6 +371,11 @@ export default Vue.extend({
         this.isExecDisable = false;
       });
     },
+    back() {
+      this.$router.push({
+        name: "desginList",
+      });
+    }
   },
 });
 </script>
