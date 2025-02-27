@@ -170,7 +170,6 @@ export default {
 }
 
 .card-box {
-  width: 100%;
   padding: 20px;
   color: #1d2129;
   background: #fff;

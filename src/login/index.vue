@@ -48,9 +48,9 @@
 						</el-form-item>
 					</el-form>
 
-					<p>
+					<!-- <p>
 						<el-button type="text">忘记登录密码</el-button>
-					</p>
+					</p> -->
 					<div>
 						<el-button
 							class="login-button"
@@ -228,7 +228,7 @@ export default {
 	text-align: center;
 	display: flex;
 	height: 100vh;
-  width: 100vh;
+  width: 100%;
 	background: url(../assets/login-background.jpg)
 		no-repeat;
 	background-size: 100% 100%;
@@ -312,6 +312,7 @@ export default {
 			background: #4a5aed;
 			width: 100%;
 			border-color: #4a5aed;
+      margin-top: 30px;
 		}
 		.el-input--prefix .el-input__inner {
 			padding-left: 40px;
@@ -325,7 +326,7 @@ export default {
 	.logo-active {
 		opacity: 1;
 		width: 540px;
-		height: 320px;
+		height: 350px;
 	}
 	.phone-login-form {
 		.el-input-group__append,

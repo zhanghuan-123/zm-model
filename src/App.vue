@@ -1,20 +1,5 @@
 <template>
   <el-container class="wrap">
-    <el-header class="fy_el-header" height="42px">
-      <img src="./assets/logo.png" alt="" />
-      <span class="logoFont">机器学习平台</span>
-      <router-link class="navItem" active-class="active" to="/index">ai平台</router-link>
-      <router-link class="navItem" active-class="active" to="/operation">运维中心</router-link>
-      <el-dropdown>
-        <span class="el-dropdown-link">
-          更多<i class="el-icon-arrow-down el-icon--right"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item icon="el-icon-s-tools">修改密码</el-dropdown-item>
-          <el-dropdown-item icon="el-icon-warning">退出登录</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </el-header>
     <el-container class="my-app-container">
       <keep-alive>
         <router-view></router-view>
