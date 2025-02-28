@@ -1,4 +1,4 @@
-const passwordReg = /(?![0-9A-Z]+$)(?![0-9a-z]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/;
+const passwordReg = /(?![0-9A-Z]+$)(?![0-9a-z]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/; // 必须同时包含大小写字母及数字
 const phoneReg = /^1[3-9][0-9]{9}$/;
 
 const validatePass = (rule, value, callback) => {
@@ -7,7 +7,7 @@ const validatePass = (rule, value, callback) => {
 	} else if (passwordReg.test(value)) {
 		callback();
 	} else {
-		callback(new Error("请输入格式正确的密码"));
+		callback(new Error("请输入格式正确的密码,必须同时包含大小写字母及数字"));
 	}
 };
 

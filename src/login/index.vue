@@ -122,6 +122,7 @@
 				@close="closeRe"
 				:canvasWidth="500"
 				:canvasHeight="240"
+        :range="25"
 			></Vcode>
 		</div>
 	</div>
@@ -191,13 +192,17 @@ export default {
 			}, 1000);
 		},
 		async login() {
-      const { retcode } = await loginApi({...this.numberLoginFrom})
-      if(retcode == 0) {
-        //做一些储存用户身份的动作
-        this.$router.push({
+      // todo 登录之后的逻辑
+      this.$router.push({
 					name: "desginList",
 				});
-      }
+      // const { retcode } = await loginApi({...this.numberLoginFrom})
+      // if(retcode == 0) {
+      //   //做一些储存用户身份的动作
+      //   this.$router.push({
+			// 		name: "desginList",
+			// 	});
+      // }
 		},
 		submit(formName) {
 			this.$refs[formName].validate((valid) => {
