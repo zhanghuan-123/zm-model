@@ -26,6 +26,17 @@
         <el-table :data="tableInfo.dataSource">
           <el-table-column label="模型名称" prop="name"> </el-table-column>
           <el-table-column label="创建时间" prop="createTime"> </el-table-column>
+          <el-table-column label="执行状态" prop="status">
+            <template slot-scope="scope">
+							<span
+								class="status-box"
+								:style="{
+									backgroundColor: `${asyncStatus(scope.row.status).color}`
+								}"
+							></span>
+							<span>{{ asyncStatus(scope.row.status).lable }}</span>
+						</template>
+          </el-table-column>
           <el-table-column label="操作" prop="action">
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
@@ -80,6 +91,7 @@ export default {
           {
             createTime: "2016-05-02",
             name: "模型一",
+            status: 2,
             address: "上海市普陀区金沙江路 1518 弄",
           },
         ],
@@ -158,6 +170,53 @@ export default {
         this.deleteVisible = false;
       }
     },
+    asyncStatus(status) {
+			const statusArray = new Map([
+				[
+					0,
+					{
+						color: "#ABABAB",
+						lable: "等待执行"
+					}
+				],
+				[
+					1,
+					{
+						color: "#4D43C5",
+						lable: "计算中"
+					}
+				],
+				[
+					2,
+					{
+						color: "#52C41A",
+						lable: "已完成"
+					}
+				],
+				[
+					3,
+					{
+						color: "#FF4D4F",
+						lable: "失败"
+					}
+				],
+				[
+					4,
+					{
+						color: "#FF4D4F",
+						lable: "删除"
+					}
+				],
+				[
+					"defult",
+					{
+						color: "#ABABAB",
+						lable: "等待执行"
+					}
+				]
+			]);
+			return statusArray.get(status) || statusArray.get("defult");
+		},
   },
 };
 </script>
@@ -263,4 +322,13 @@ export default {
   text-align: right;
   padding: 0;
 }
+
+.status-box {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-block;
+    margin-right: 10px;
+  }
 </style>
